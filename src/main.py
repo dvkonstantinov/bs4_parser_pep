@@ -7,8 +7,7 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from configs import configure_argument_parser, configure_logging
-from constants import BASE_DIR, MAIN_DOC_URL, PEP_URL, EXPECTED_STATUS, \
-    STATUSES
+from constants import BASE_DIR, MAIN_DOC_URL, PEP_URL, EXPECTED_STATUS
 from outputs import control_output
 from utils import get_response, find_tag
 
@@ -66,7 +65,6 @@ def latest_versions(session):
         else:
             version, status = a_tag.text, ''
         results.append((link, version, status))
-
     return results
 
 
@@ -113,7 +111,6 @@ def pep(session):
     for el in parse_res_with_repeat:
         if el not in parse_res:
             parse_res.append(el)
-
     count_peps = {
         'Active': 0,
         'Accepted': 0,
@@ -159,15 +156,12 @@ MODE_TO_FUNCTION = {
 def main():
     configure_logging()
     logging.info('Парсер запущен!')
-
     arg_parser = configure_argument_parser(MODE_TO_FUNCTION.keys())
     args = arg_parser.parse_args()
     logging.info(f'Аргументы командной строки: {args}')
-
     session = requests_cache.CachedSession()
     if args.clear_cache:
         session.cache.clear()
-
     parser_mode = args.mode
     results = MODE_TO_FUNCTION[parser_mode](session)
     if results is not None:
