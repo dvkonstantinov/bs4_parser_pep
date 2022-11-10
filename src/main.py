@@ -140,7 +140,7 @@ def pep(session):
             logging.error(f'Неверный статус на странице PEP - {status_text}. '
                           f'Ссылка: {url}')
     result = [('Статус', 'Количество')]
-    [result.append((k, v)) for k, v in count_peps.items()]
+    [result.extend(count_peps.items())]
     result.append(('Total', total_count))
     return result
 
